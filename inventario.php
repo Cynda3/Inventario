@@ -4,9 +4,7 @@ session_start();
 // Crea una variable de sesion para guardar los datos del invnetario
 if(isset($_POST["enviar"])){ 
 	$_SESSION["inventario"]= array();
-	$_SESSION["codigo"]=$_POST["codigo"];
-	$_SESSION["descripcion"]=$_POST["descripcion"];
-	$_SESSION["cantidad"]=$_POST["cantidad"];
+	$_SESSION["nombre"]=$_POST["nombre"];
 }
 ?>
 <!DOCTYPE html>
@@ -15,7 +13,7 @@ if(isset($_POST["enviar"])){
 	<title></title>
 </head>
 <body>
-		<h1>Inventario de dispositivos hardware</h1>
+		<h1>Inventario de <?php echo $_SESSION["nombre"] ?></h1>
 		<form method="post" action="inventario.php">
 			<label>Codigo:</label> 
 			<!-- Muestro los datos anteriores en los input en caso de haberlos -->
@@ -40,7 +38,7 @@ if(isset($_POST["enviar"])){
 					echo($inventario);
 
 					// Compruebo si codigo y descripcion estan vacios
-					if($_POST["codigo"]!="" && $_POST["descripcion"]!=""){
+					if($_POST["codigo"]!=""&& $_POST["descripcion"]!=""){
 						// COmpruebo a ver si esta el nombre en el inventario
 						if(!array_key_exists($codigo,$inventario)){
 							// Añado los datos al inventario
@@ -49,14 +47,14 @@ if(isset($_POST["enviar"])){
 							// Compruebo que han introducido la cantidad
 							if ($_POST["cantidad"]!="" && $_POST["cantidad"] < 0) {
 								// Muestro los datos del inventario
-								foreach ($inventario as $key => $value) { 
-									echo "<br>Codigo: ".$value."<br>Descripcion: ".$value."<br>Cantidad: ".$value."<br>";
+								foreach ($inventario as $producto) { 
+									echo "<br>Codigo: ".$producto['codigo']."<br>Descripcion: ".$producto['descripcion']."<br>Cantidad: ".$producto['cantidad']."<br>";
 								}
 							}
 							else{
 								// Muestro los datos del inventario
-								foreach ($inventario as $key => $value) { 
-									echo "<br>Codigo: ".$key."<br>Descripcion: ".$value."<br>";
+								foreach ($inventario as $producto) { 
+									echo "<br>Codigo: ".$producto['codigo']."<br>Descripcion: ".$producto['descripcion']."<br>";
 								}
 							}
 						}
@@ -66,26 +64,26 @@ if(isset($_POST["enviar"])){
 								if ($cantidad!="") {
 									$inventario["descripcion"]=$descripcion;
 									$inventario["cantidad"]=$cantidad;
-									foreach ($inventario as $key => $value) { 
-										echo "<br>Codigo: ".$value."<br>Descripcion: ".$value."<br>Cantidad: ".$value."<br>";
+									foreach ($inventario as $producto) { 
+										echo "<br>Codigo: ".$producto['codigo']."<br>Descripcion: ".$producto['descripcion']."<br>Cantidad: ".$producto['cantidad']."<br>";
 									}
 								}
 								$inventario["descripcion"]=$descripcion;
-								foreach ($inventario as $key => $value) { 
-									echo "<br>Codigo: ".$value."<br>Descripcion: ".$value."<br>Cantidad: ".$value."<br>";
+								foreach ($inventario as $producto) { 
+									echo "<br>Codigo: ".$producto['codigo']."<br>Descripcion: ".$producto['descripcion']."<br>Cantidad: ".$producto['cantidad']."<br>";
 								}
 							}
 							elseif($cantidad!=""){
 								if ($cantidad == -1) {
 									// Lo elimino del inventario
 									unset($inventario[$codigo]); 
-									foreach ($inventario as $key => $value) { 
-										echo "<br>Codigo: ".$value."<br>Descripcion: ".$value."<br>Cantidad: ".$value."<br>";
+									foreach ($inventario as $producto) { 
+										echo "<br>Codigo: ".$producto['codigo']."<br>Descripcion: ".$producto['descripcion']."<br>Cantidad: ".$producto['cantidad']."<br>";
 									}
 								}
 								$inventario["cantidad"]=$cantidad;
-								foreach ($inventario as $key => $value) { 
-									echo "<br>Codigo: ".$value."<br>Descripcion: ".$value."<br>Cantidad: ".$value."<br>";
+								foreach ($inventario as $producto) { 
+									echo "<br>Codigo: ".$producto['codigo']."<br>Descripcion: ".$producto['descripcion']."<br>Cantidad: ".$producto['cantidad']."<br>";
 								}
 							}
 						}
